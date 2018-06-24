@@ -1,5 +1,4 @@
-﻿using Ixen.Renderer;
-using NetCoreEx.Geometry;
+﻿using NetCoreEx.Geometry;
 using SkiaSharp;
 using System;
 using WinApi.Gdi32;

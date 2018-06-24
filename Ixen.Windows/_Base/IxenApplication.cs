@@ -5,30 +5,34 @@ using WinApi.Windows.Helpers;
 
 namespace Ixen.Windows
 {
-    public class IxenApplication : IxenApplicationBase
+    public class IxenApplication : IxenSizedApplicationBase
     {
-        public int Init(IxenSizedApplicationInitOptions initOptions = null)
-        {
-            if (initOptions == null)
-                initOptions = new IxenSizedApplicationInitOptions();
+        private IxenWindow _window;
 
+        public IxenApplication(IxenSizedApplicationInitOptions initOptions = null)
+            : base(initOptions)
+        {}
+
+        public int Init()
+        {
             try
             {
                 ApplicationHelpers.SetupDefaultExceptionHandlers();
                 var factory = WindowFactory.Create(hBgBrush: IntPtr.Zero);
+                var options = (IxenSizedApplicationInitOptions)_initOptions;
                 using
                 (
-                    var win = factory.CreateWindow
+                    _window = factory.CreateWindow
                     (
                         () => new IxenWindow(Render),
-                        initOptions.Title,
-                        width: initOptions.Width,
-                        height: initOptions.Height,
+                        options.Title,
+                        width: options.Width,
+                        height: options.Height,
                         constructionParams: new FrameWindowConstructionParams())
                     )
                 {
-                    win.Show();
-                    return new EventLoop().Run(win);
+                    _window.Show();
+                    return new EventLoop().Run(_window);
                 }
             }
             catch (Exception ex)
@@ -36,6 +40,24 @@ namespace Ixen.Windows
                 MessageBoxHelpers.ShowError(ex);
                 return 1;
             }
+        }
+
+        public override int Width
+        {
+            get => _window?.GetClientRect().Width ?? -1;
+            set => _window?.SetSize(value, Height);
+        }
+
+        public override int Height
+        {
+            get => _window?.GetClientRect().Height ?? -1;
+            set => _window?.SetSize(Width, value);
+        }
+
+        public override string Title
+        {
+            get => _window?.GetText();
+            set => _window?.SetText(value);
         }
     }
 }
