@@ -5,11 +5,11 @@ using WinApi.Windows.Helpers;
 
 namespace Ixen.Windows
 {
-    public class IxenApplication : IxenSizedApplicationBase
+    public class IxenApplication : IxenApplicationBase
     {
         private IxenWindow _window;
 
-        public IxenApplication(IxenSizedApplicationInitOptions initOptions = null)
+        public IxenApplication(IxenApplicationInitOptions initOptions = null)
             : base(initOptions)
         {}
 
@@ -19,15 +19,14 @@ namespace Ixen.Windows
             {
                 ApplicationHelpers.SetupDefaultExceptionHandlers();
                 var factory = WindowFactory.Create(hBgBrush: IntPtr.Zero);
-                var options = (IxenSizedApplicationInitOptions)_initOptions;
                 using
                 (
                     _window = factory.CreateWindow
                     (
                         () => new IxenWindow(Render),
-                        options.Title,
-                        width: options.Width,
-                        height: options.Height,
+                        _initOptions.Title,
+                        width: _initOptions.Width,
+                        height: _initOptions.Height,
                         constructionParams: new FrameWindowConstructionParams())
                     )
                 {
@@ -40,6 +39,11 @@ namespace Ixen.Windows
                 MessageBoxHelpers.ShowError(ex);
                 return 1;
             }
+        }
+
+        protected override void Invalidate()
+        {
+            _window.Invalidate(true);
         }
 
         public override int Width

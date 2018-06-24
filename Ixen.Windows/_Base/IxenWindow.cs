@@ -14,9 +14,9 @@ namespace Ixen.Windows
         private bool _painted;
         private IntPtr _hdc;
         private SKSurface _surface;
-        private Action<SKSurface, SKRect> _renderer;
+        private Action<SKCanvas, SKRect> _renderer;
 
-        public IxenWindow(Action<SKSurface, SKRect> renderer)
+        public IxenWindow(Action<SKCanvas, SKRect> renderer)
         {
             _renderer = renderer;
             _pixelBuffer = new NativePixelBuffer();
@@ -48,7 +48,7 @@ namespace Ixen.Windows
                 {
                     if (_surface != null)
                     {
-                        _renderer(_surface, new SKRect(0, 0, clientRect.Width, clientRect.Height));
+                        _renderer(_surface.Canvas, new SKRect(0, 0, clientRect.Width, clientRect.Height));
                         _painted = true;
                     }
                 }
