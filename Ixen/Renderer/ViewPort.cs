@@ -1,4 +1,6 @@
-﻿namespace Ixen.Renderer
+﻿using Ixen.Visual;
+
+namespace Ixen.Renderer
 {
     public sealed class ViewPort : VisualAbstractItem
     {

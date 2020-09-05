@@ -14,9 +14,13 @@ namespace Ixen
         public Color(string hexColor)
         {
             if (SKColor.TryParse(hexColor, out SKColor skColor))
+            {
                 SKColor = skColor;
+            }
             else
+            {
                 SKColor = SKColor.Empty;
+            }
         }
 
         public static Color Transparent          => new Color(0x00, 0x00, 0x00, 0x00);

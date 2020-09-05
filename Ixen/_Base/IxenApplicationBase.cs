@@ -1,10 +1,10 @@
 ﻿using Ixen.Renderer;
-using Ixen.Views;
+using Ixen.Visual;
 using SkiaSharp;
 
 namespace Ixen
 {
-    public abstract class IxenApplicationBase : ISkiaRenderer
+    public abstract class IxenApplicationBase
     {
         protected IxenApplicationInitOptions _initOptions;
         internal ApplicationScene _scene;
@@ -19,7 +19,7 @@ namespace Ixen
             _initOptions = initOptions ?? new IxenApplicationInitOptions();
         }
 
-        public void Render(SKCanvas canvas, SKRect rect)
+        internal protected void Render(SKCanvas canvas, SKRect rect)
         {
             _scene.Render(canvas, rect);
         }

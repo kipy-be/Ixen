@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ixen.Renderer
+﻿namespace Ixen.Renderer
 {
     public abstract class VisualAbstractItem
     {

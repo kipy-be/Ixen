@@ -1,4 +1,4 @@
-﻿namespace Ixen.Views
+﻿namespace Ixen.Visual
 {
     public enum ViewType : byte
     {

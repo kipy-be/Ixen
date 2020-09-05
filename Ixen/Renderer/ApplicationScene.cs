@@ -1,8 +1,9 @@
-﻿using SkiaSharp;
+﻿using Ixen.Visual;
+using SkiaSharp;
 
 namespace Ixen.Renderer
 {
-    internal class ApplicationScene : VisualItem, ISkiaRenderer
+    internal class ApplicationScene : VisualItem
     {
         private static Color _clearColor = Color.White;
         private ViewPort _viewPort;
@@ -17,9 +18,10 @@ namespace Ixen.Renderer
         public override void Render(RendererContext context, ViewPort viewPort)
         {
             context.Clear(_clearColor);
+            Content?.Render(context, viewPort);
         }
 
-        public void Render(SKCanvas canvas, SKRect rect)
+        internal void Render(SKCanvas canvas, SKRect rect)
         {
             _rendererContext.SKCanvas = canvas;
             _rendererContext.SKClientRect = rect;
